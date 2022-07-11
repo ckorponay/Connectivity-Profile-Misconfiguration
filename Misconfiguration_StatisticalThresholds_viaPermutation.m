@@ -92,7 +92,7 @@ for j = 1:numSeeds
    
     X1 = zeros(1, numVoxels);
 
-    imgFile = sprintf('/subj%s_r2zmap_%s.nii.gz', seedId, seedId);
+    imgFile = sprintf('/subj%s_r2zmap_%s.nii.gz', subjId, seedId);
    
     gm = load_nii(imgFile);
     gm = gm.img(maskIdx);
@@ -120,7 +120,7 @@ end
    
     X2 = zeros(1, numVoxels);
 
-    imgFile = sprintf('/subj%s_r2zmap_%s.nii.gz', seedId, seedId);
+    imgFile = sprintf('/subj%s_r2zmap_%s.nii.gz', subjId, seedId);
     
     gm = load_nii(imgFile);
     gm = gm.img(maskIdx);
@@ -237,8 +237,8 @@ end
 
 end
 
-  writematrix(Z_final_MD, ['MD.csv'])
-  writematrix(Z_final_entropy, ['Entropy.csv'])
-  writematrix(Z_final_RankOrder, ['RankOrder.csv'])
+  writematrix(Z_final_MD, ['MD.csv'])                  %Permuted distribution of voxel-wise Aggregate Divergence values
+  writematrix(Z_final_entropy, ['Entropy.csv'])        %Permuted distribution of voxel-wise Entropy Shift values
+  writematrix(Z_final_RankOrder, ['RankOrder.csv']).   %Permuted distribution of voxel-wise Rank Order Misarrangement values
   
   %Identify the p<0.001 threshold of each metric's distribution  
