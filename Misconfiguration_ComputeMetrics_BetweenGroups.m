@@ -1,4 +1,4 @@
-% Script for computing connectivity profile metrics (i.e., aggregate
+% Script for computing voxel-wise connectivity profile metrics (i.e., aggregate
 % divergence, rank order misarrangement, entropy shift) between a clinical
 % group and normal comparison group 
 
@@ -20,7 +20,7 @@ fileId = fopen(csvFile);
 csv = textscan(fileId, '%s', 'Delimiter', ',');
 fclose(fileId);
 
-%load CSV with seed IDs%
+%load CSV with ROI/seed IDs (i.e., the connectivity profile target regions)
 csv2Root = '...';
 csv2File = sprintf('%s/Seeds.csv', csv2Root);
 file2Id = fopen(csv2File);
@@ -28,10 +28,10 @@ csv2 = textscan(file2Id, '%s', 'Delimiter', ',');
 fclose(file2Id);
 
 %path to processed functional imaging data (z-scored, voxel-wise
-%connectivity maps, one map for each ROI for each subject)
+%connectivity maps, one map for each connectivity profile target ROI for each subject)
 imgRoot = '.../ImagingData';
 
-%load mask
+%load mask (mask region should encompass all voxels whose connectivity profiles will be evaluated)
 mask = load_nii(sprintf('.../Mask.nii.gz'));
 maskIdx = find(mask.img(:) > 0);
 
@@ -54,16 +54,18 @@ end
 
 P = 1
 
-Z_final_MD = zeros(P,numVoxels);
-Z_final_RankOrder = zeros(P,numVoxels);
-Z_final_Entropy = zeros(P,numVoxels);
+Z_final_MD = zeros(P,numVoxels);               %For storing the final, voxel-wise Aggregate Divergence values
+Z_final_RankOrder = zeros(P,numVoxels);        %For storing the final, voxel-wise Rank Order Rearrangement values
+Z_final_Entropy = zeros(P,numVoxels);          %For storing the final, voxel-wise Entropy Shift values
 
+
+%%%% Set up each voxel's connectivity profile in each subject, and then create group-average connectivity profiles for each voxel
 
 
 fprintf('\nStarting Iteration %d', p);
 
-intraGroup_1 = Y(1:33);   %Controls
-intraGroup_2 = Y(34:end); %SUD group
+intraGroup_1 = Y(1:33);   %Controls            %e.g., for a control group of n=33
+intraGroup_2 = Y(34:end); %SUD group    
 
 numVolIds_intraGroup_1 = length(intraGroup_1);
 numVolIds_intraGroup_2 = length(intraGroup_2);
@@ -84,7 +86,7 @@ for j = 1:numSeeds
    
     X1 = zeros(1, numVoxels);
 
-    imgFile = sprintf('Controls/subj%s_r2zmap_%s.nii.gz', seedId, seedId);
+    imgFile = sprintf('Controls/subj%s_r2zmap_%s.nii.gz', subjId, seedId);
    
     gm = load_nii(imgFile);
     gm = gm.img(maskIdx);
@@ -97,6 +99,7 @@ for j = 1:numSeeds
   
   %for getting the mean Z score of each ROI across all voxels
   Z1(j,:) = mean(W1, 1);
+  %create rank ordered connectivity profile at each voxel
   Z1ranked = tiedrank(Z1);
   
 end
@@ -112,7 +115,7 @@ end
    
     X2 = zeros(1, numVoxels);
 
-    imgFile = sprintf('SUD/subj%s_r2zmap_%s.nii.gz', seedId, seedId);
+    imgFile = sprintf('SUD/subj%s_r2zmap_%s.nii.gz', subjId, seedId);
     
     gm = load_nii(imgFile);
     gm = gm.img(maskIdx);
@@ -125,12 +128,16 @@ end
   
   %for getting the mean Z score of each ROI across all voxels
   Z2(j,:) = mean(W2, 1);
+  %create rank ordered connectivity profile at each voxel
   Z2ranked = tiedrank(Z2);
   
   end
   
+  
+%%%%%%%%%
+%%Compute the 3 connectivity profile properties at each voxel, by comparing connectivity profiles across the group-averaged maps at each voxel
 
-%Compute the 3 connectivity profile properties at each voxel
+%Set up is for connectivity profiles with 30 target regions (can be adjusted to any number)
 
   for b=1:numVoxels
    
