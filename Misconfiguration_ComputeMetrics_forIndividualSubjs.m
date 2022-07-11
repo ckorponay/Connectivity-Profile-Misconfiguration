@@ -1,4 +1,7 @@
-
+%% Rather than compute connectivity profile metrics for one group versus
+%% another group, compute connectivity profile metrics at the individual subject
+%% level. Establish a set of normative average connectivity profiles, then compare
+%% each subject in the clinical/treatment group to the normative average
 
 
 
@@ -80,7 +83,7 @@ W1 = zeros(numVolIds_intraGroup_1,numVoxels);
    
     X1 = zeros(1, numVoxels);
 
-    imgFile = sprintf('Controls/subj%s_r2zmap_%s.nii.gz', seedId, seedId);
+    imgFile = sprintf('Controls/subj%s_r2zmap_%s.nii.gz', subjId, seedId);
    
     gm = load_nii(imgFile);
     gm = gm.img(maskIdx);
@@ -111,7 +114,7 @@ W1 = zeros(numVolIds_intraGroup_1,numVoxels);
     
     X2 = zeros(1, numVoxels);
 
-    imgFile = sprintf('SUD/subj%s_r2zmap_%s.nii.gz', seedId, seedId);
+    imgFile = sprintf('SUD/subj%s_r2zmap_%s.nii.gz', subjId, seedId);
    
     
     gm = load_nii(imgFile);
