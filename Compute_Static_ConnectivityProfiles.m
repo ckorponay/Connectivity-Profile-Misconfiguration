@@ -37,7 +37,8 @@ addpath '/path/to/Downloads/NIfTI_20140122'
 
       
 
-%% load time series CSV files for each subject
+%% load time series CSV file paths for each subject
+
 P = '/path/to/seed_CSVs';
 S = dir(fullfile(P,'*csv*')); 
 
@@ -54,6 +55,8 @@ TRs=  ;                        %User sets parameter
 Seed_Voxels=  ;                %User sets parameter
 Total_Target_ROIs=  ;          %User sets parameter
 %Restricted_Target_ROIs=  ;  %User sets parameter - optional; restrict to only the strongest X connections
+
+%% load the time series data for each subject
 
 Final_EdgeTimeseries=zeros(Subjects*TRs*Seed_Voxels,Total_Target_ROIs);
 %Final_EdgeTimeseries_Top5=zeros(Subjects*TRs*Seed_Voxels,Restricted_Target_ROIs);
@@ -73,6 +76,7 @@ for i = 1:Subjects
     S(i).data = [];
 
 %load target ROI mean timeseries
+
     F2 = fullfile(P2,S2(i).name);
     S2(i).data = readtable(F2,'NumHeaderLines', 1);
     S2(i).data = table2array(S2(i).data); 
@@ -82,6 +86,7 @@ for i = 1:Subjects
     S2(i).data = [];
 
 %compute the edge time series of each seed voxel-target ROI pair
+
 for x = 1:Seed_Voxels                                  
     for j = 1:Total_Target_ROIs
        S(i).Final_EdgeTimeseries(1:TRs,j) = z1(:,x).*z2(:,j);
@@ -89,6 +94,7 @@ for x = 1:Seed_Voxels
 end
 
 %compute the time-averaged connectivity profile of each seed voxel for the subject
+
 for g=1:Seed_Voxels 
  AvgConnProf_acrossTime(g,1:Total_Target_ROIs,i) = atanh(mean(S(i).Final_EdgeTimeseries(g,:,:),3));
 end
@@ -97,6 +103,7 @@ S(i).Final_EdgeTimeseries = [];
 end
 
 %Compute the group-averaged time-averaged connectivity profile of each seed voxel
+
 GroupAvg_ConnProf = mean(AvgConnProf_acrossTime,3);
 
 
