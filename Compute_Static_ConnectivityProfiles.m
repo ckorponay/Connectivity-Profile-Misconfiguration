@@ -47,10 +47,7 @@ S2 = dir(fullfile(P2,'*.csv'));
 
 %% I).
 
-%% Compute frame-wise cortical coactivation profiles for all striatal voxels
-%% across all subejcts
-
-I=1;
+%% Set user parameters
 
 Subjects=  ;                   %User sets parameter 
 TRs=  ;                        %User sets parameter 
