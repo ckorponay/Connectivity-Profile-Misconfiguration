@@ -23,13 +23,10 @@ Z_final_Entropy = zeros(P,numVoxels);          %For storing the final, voxel-wis
 
 
   
-  %for getting the mean Z score of each ROI across all voxels
-  Z2(j,:) = mean(W2, 1);
-  %create rank ordered connectivity profile at each voxel
-  Z2ranked = tiedrank(Z2);
-  
-  end
-  
+
+Ranked_GroupAvg_ConnProf_Group1 = tiedrank(GroupAvg_ConnProf_Group1);
+Ranked_GroupAvg_ConnProf_Group2 = tiedrank(GroupAvg_ConnProf_Group2);
+    
   
 %%%%%%%%%
 %%Compute the 3 connectivity profile properties at each voxel, by comparing connectivity profiles across the group-averaged maps at each voxel
@@ -39,13 +36,13 @@ Z_final_Entropy = zeros(P,numVoxels);          %For storing the final, voxel-wis
   for b=1:numVoxels
    
   %Entropy    
-    h1= abs(Z1(:,b));
+    h1= abs(GroupAvg_ConnProf_Group1(:,b));
     p1 = bsxfun(@rdivide,h1,sum(h1,1));
     e1 = -nansum(p1.*log2(p1),1);
     Entropy1 = e1/log2(30);
       
     
-    h2= abs(Z2(:,b));
+    h2= abs(GroupAvg_ConnProf_Group2(:,b));
     p2 = bsxfun(@rdivide,h2,sum(h2,1));
     e2 = -nansum(p2.*log2(p2),1);
     Entropy2 = e2/log2(30);
