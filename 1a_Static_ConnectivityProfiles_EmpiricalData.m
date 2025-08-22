@@ -103,7 +103,8 @@ end
 %compute the time-averaged connectivity profile of each seed voxel for the subject
 
 for g=1:Seed_Voxels 
- AvgConnProf_acrossTime(g,1:Total_Target_ROIs,i) = atanh(mean(S(i).Final_EdgeTimeseries(g,:,:),3));
+ AvgConnProf_acrossTime_Group1(g,1:Total_Target_ROIs,i) = atanh(mean(S(i).Final_EdgeTimeseries(g,:,:),3));
+ %AvgConnProf_acrossTime_Group2(g,1:Total_Target_ROIs,i) = atanh(mean(S(i).Final_EdgeTimeseries(g,:,:),3));
 end
 S(i).Final_EdgeTimeseries = [];
 
@@ -111,8 +112,8 @@ end
 
 %Compute the group-averaged time-averaged connectivity profile of each seed voxel
 
-GroupAvg_ConnProf_Group1 = mean(AvgConnProf_acrossTime,3);
-%GroupAvg_ConnProf_Group2 = mean(AvgConnProf_acrossTime,3);
+GroupAvg_ConnProf_Group1 = mean(AvgConnProf_acrossTime_Group1,3);
+%GroupAvg_ConnProf_Group2 = mean(AvgConnProf_acrossTime_Group2,3);
 
 
 %%%% Project the connectivity values into an MNI space NIFTI file %%%%
