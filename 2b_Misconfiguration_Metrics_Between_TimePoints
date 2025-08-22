@@ -73,9 +73,9 @@ for i=1:Subjects
   end
   end
 
-GroupAvg_Aggregate_Divergence = mean(Subject_Aggregate_Divergence);
-GroupAvg_RankOrderRearrangement = mean(Subject_RankOrderRearrangement);        
-GroupAvg_Entropy_Difference = mean(Subject_Entropy_Difference); 
+GroupAvg_Aggregate_Divergence = mean(Subject_Aggregate_Divergence,2);
+GroupAvg_RankOrderRearrangement = mean(Subject_RankOrderRearrangement,2);        
+GroupAvg_Entropy_Difference = mean(Subject_Entropy_Difference,2); 
 
   
   %CSVs contain value of connectivity profile metric for each voxel in the
