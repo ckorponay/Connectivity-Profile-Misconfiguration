@@ -20,6 +20,8 @@ Final_Aggregate_Divergence = zeros(numVoxels);          %For storing the final, 
 Final_RankOrderRearrangement = zeros(numVoxels);        %For storing the final, voxel-wise Rank Order Rearrangement values
 Final_Entropy_Difference = zeros(numVoxels);            %For storing the final, voxel-wise Entropy Shift values
 
+GroupAvg_ConnProf_Group1=GroupAvg_ConnProf_Group1';
+GroupAvg_ConnProf_Group2=GroupAvg_ConnProf_Group2';
   
 %%%%%%%%%
 %%Compute the 3 connectivity profile properties at each voxel, by comparing connectivity profiles across the group-averaged maps at each voxel
@@ -73,6 +75,6 @@ Final_Entropy_Difference = zeros(numVoxels);            %For storing the final, 
   
   %CSVs contain value of connectivity profile metric for each voxel in the
   %mask
-  writematrix(Z_final_MD, ['MD.csv'])
-  writematrix(Z_final_entropy, ['Entropy.csv'])
-  writematrix(Z_final_RankOrder, ['RankOrder.csv'])
+  writematrix(Final_Aggregate_Divergence, ['AggregateDivergence.csv'])
+  writematrix(Final_Entropy_Difference, ['EntropyShift.csv'])
+  writematrix(Final_RankOrderRearrangement, ['RankOrderRearrangement.csv'])
