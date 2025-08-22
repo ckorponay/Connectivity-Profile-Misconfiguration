@@ -77,8 +77,52 @@ GroupAvg_Aggregate_Divergence = mean(Subject_Aggregate_Divergence,2);
 GroupAvg_RankOrderRearrangement = mean(Subject_RankOrderRearrangement,2);        
 GroupAvg_Entropy_Difference = mean(Subject_Entropy_Difference,2); 
 
+%%%% Project the Subject-Level maps into an MNI space NIFTI file %%%%
+
+imgRoot = '/path/to/seedmask';
+mask = load_untouch_nii(sprintf('%s/Seed_Mask.nii.gz', imgRoot));
+
+in_brain=find(mask.img(:)>0);
+full_brain_space=mask.img.*0;
+full_brain_space = double(full_brain_space);
+
+for i=1:Subjects
+
+%Aggregate Divergence Files
+full_brain_space(in_brain)=Subject_Aggregate_Divergence(:,i) 
+imgFile = sprintf('%s/Seed_Mask.nii.gz', imgRoot);
+gm = load_untouch_nii(imgFile);
+new_hdr=gm;
+new_hdr.vol=full_brain_space;
+new_hdr.img=full_brain_space;
+flNm = num2str(i,'Voxelwise_Aggregate_Divergence_Subj_00%d');
+save_untouch_nii(new_hdr,flNm);
+
+%Rank Order Rearrangement Files
+full_brain_space(in_brain)=Subject_RankOrderRearrangement(:,i) 
+imgFile = sprintf('%s/Seed_Mask.nii.gz', imgRoot);
+gm = load_untouch_nii(imgFile);
+new_hdr=gm;
+new_hdr.vol=full_brain_space;
+new_hdr.img=full_brain_space;
+flNm = num2str(i,'Voxelwise_RankOrder_Rearrangement_Subj_00%d');
+save_untouch_nii(new_hdr,flNm);
+
+%Entropy Shift Files
+full_brain_space(in_brain)=Subject_Entropy_Difference(:,i) 
+imgFile = sprintf('%s/Seed_Mask.nii.gz', imgRoot);
+gm = load_untouch_nii(imgFile);
+new_hdr=gm;
+new_hdr.vol=full_brain_space;
+new_hdr.img=full_brain_space;
+flNm = num2str(i,'Voxelwise_Entropy_Shift_Subj_00%d');
+save_untouch_nii(new_hdr,flNm);
+
+end
+
+
   
-  %CSVs contain value of connectivity profile metric for each voxel in the
+  %Optional: CSVs containing value of connectivity profile metric for each voxel in the
   %mask
   writematrix(GroupAvg_Aggregate_Divergence, ['AggregateDivergence.csv'])
   writematrix(GroupAvg_Entropy_Difference, ['EntropyShift.csv'])
