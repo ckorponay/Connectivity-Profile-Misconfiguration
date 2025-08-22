@@ -1,6 +1,8 @@
+%%Use if Script 1 was skipped and you want to import FC values directly from voxel-wise NIFTI files%%
+
 % Script for computing voxel-wise connectivity profile metrics (i.e., aggregate
 % divergence, rank order misarrangement, entropy shift) between a clinical
-% group and normal comparison group 
+% group and normal comparison group or between timepoints of the same group
 
 
 clc;
