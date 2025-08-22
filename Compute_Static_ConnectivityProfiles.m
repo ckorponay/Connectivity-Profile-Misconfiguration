@@ -116,7 +116,9 @@ in_brain=find(mask.img(:)>0);
 full_brain_space=mask.img.*0;
 full_brain_space = double(full_brain_space);
 
-full_brain_space(in_brain)=GroupAvg_ConnProf(:,1) %%User sets number; grab the seed's voxelwise connectivity value with ROI X
+for i=1:Total_Target_ROIs
+
+full_brain_space(in_brain)=GroupAvg_ConnProf(:,i) %%User sets number; grab the seed's voxelwise connectivity value with ROI X
 
 imgFile = sprintf('%s/Seed_Mask.nii.gz', imgRoot);
 gm = load_untouch_nii(imgFile);
@@ -124,4 +126,10 @@ new_hdr=gm;
 new_hdr.vol=full_brain_space;
 new_hdr.img=full_brain_space;
 
-save_untouch_nii(new_hdr,'File_Name'); %%User sets file name, will save it out to a NIFTI file
+flNm = num2str(i,'Seed_Voxelwise_FC_with_ROI_00%d');
+
+save_untouch_nii(new_hdr,flNm);
+
+end
+
+
