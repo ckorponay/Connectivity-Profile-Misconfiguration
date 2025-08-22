@@ -126,8 +126,8 @@ full_brain_space = double(full_brain_space);
 
 for i=1:Total_Target_ROIs
 
-full_brain_space(in_brain)=GroupAvg_ConnProf_Group1(:,i) %%User sets number; grab the seed's voxelwise connectivity value with ROI X
-%full_brain_space(in_brain)=GroupAvg_ConnProf_Group2(:,i) %%User sets number; grab the seed's voxelwise connectivity value with ROI X
+full_brain_space(in_brain)=GroupAvg_ConnProf_Group1(:,i) 
+%full_brain_space(in_brain)=GroupAvg_ConnProf_Group2(:,i) 
 
 imgFile = sprintf('%s/Seed_Mask.nii.gz', imgRoot);
 gm = load_untouch_nii(imgFile);
