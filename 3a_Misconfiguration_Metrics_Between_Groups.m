@@ -16,9 +16,9 @@ addpath '/NIfTI_20140122'
 addpath(genpath('/MATLAB'))
 
 
-Final_Aggregate_Divergence = zeros(numVoxels);          %For storing the final, voxel-wise Aggregate Divergence values
-Final_RankOrderRearrangement = zeros(numVoxels);        %For storing the final, voxel-wise Rank Order Rearrangement values
-Final_Entropy_Difference = zeros(numVoxels);            %For storing the final, voxel-wise Entropy Shift values
+Final_Aggregate_Divergence = zeros(Seed_Voxels);          %For storing the final, voxel-wise Aggregate Divergence values
+Final_RankOrderRearrangement = zeros(Seed_Voxels);        %For storing the final, voxel-wise Rank Order Rearrangement values
+Final_Entropy_Difference = zeros(Seed_Voxels);            %For storing the final, voxel-wise Entropy Shift values
 
 GroupAvg_ConnProf_Group1=GroupAvg_ConnProf_Group1';
 GroupAvg_ConnProf_Group2=GroupAvg_ConnProf_Group2';
@@ -26,7 +26,7 @@ GroupAvg_ConnProf_Group2=GroupAvg_ConnProf_Group2';
 %%%%%%%%%
 %%Compute the 3 connectivity profile properties at each voxel, by comparing connectivity profiles across the group-averaged maps at each voxel
 
-  for b=1:numVoxels
+  for b=1:Seed_Voxels
    
 %%%Entropy Difference
 
