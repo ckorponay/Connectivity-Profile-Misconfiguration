@@ -102,7 +102,7 @@ end
 %compute the time-averaged connectivity profile of each seed voxel for the subject
 
 for g=1:Seed_Voxels 
- AvgConnProf_acrossTime(g,1:Total_Target_ROIs,i) = atanh(mean(S(i).Final_EdgeTimeseries(g,:,:),3));
+ AvgConnProf_acrossTime_NormativeData(g,1:Total_Target_ROIs,i) = atanh(mean(S(i).Final_EdgeTimeseries(g,:,:),3));
 end
 S(i).Final_EdgeTimeseries = [];
 
@@ -110,7 +110,7 @@ end
 
 %Compute the group-averaged time-averaged connectivity profile of each seed voxel
 
-GroupAvg_ConnProf_NormativeData = mean(AvgConnProf_acrossTime,3);
+GroupAvg_ConnProf_NormativeData = mean(AvgConnProf_acrossTime_NormativeData,3);
 
 
 
