@@ -56,8 +56,10 @@ for i=1:Subjects
       
 %%%Rank Order Rearrangement
 
-  Ranked_AvgConnProf_acrossTime_Group1 = tiedrank(AvgConnProf_acrossTime_Group1);
-  Ranked_AvgConnProf_acrossTime_Group2 = tiedrank(AvgConnProf_acrossTime_Group2);
+
+Ranked_AvgConnProf_acrossTime_Group1 = tiedrank( squeeze(AvgConnProf_acrossTime_Group1(b,:,i)) ); 
+Ranked_AvgConnProf_acrossTime_Group2 = tiedrank( squeeze(AvgConnProf_acrossTime_Group2(b,:,i)) );  
+
   
   for j=1:Total_Target_ROIs
   
