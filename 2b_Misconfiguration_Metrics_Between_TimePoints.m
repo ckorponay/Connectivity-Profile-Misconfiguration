@@ -61,7 +61,7 @@ for i=1:Subjects
   
   for j=1:Total_Target_ROIs
   
-    MD_rank(j)=abs(Ranked_AvgConnProf_acrossTime_Group1(b,j,i)-Ranked_AvgConnProf_acrossTime_Group1(b,j,i));
+    MD_rank(j)=abs(Ranked_AvgConnProf_acrossTime_Group1(b,j,i)-Ranked_AvgConnProf_acrossTime_Group2(b,j,i));
   
   end 
   
